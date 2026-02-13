@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Message by AFFAN</title>
+     <style>
+      * {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  min-height: 100dvh;
+  perspective: 1000px;
+  font: 1em/1.4 "Poppins", sans-serif;
+  overflow: hidden;
+  color: hsl(180 68% 5%);
+  background-image: radial-gradient(
+      circle farthest-corner at 50% 50%,
+      hsl(187 20% 88%) 30%,
+      hsl(149 20% 94%) 100%
+  );
+}
+
+.book {
+  position: relative;
+  display: flex;
+  margin: auto;
+  width: 42cqmin; /* Increased width */
+  pointer-events: none;
+  transform-style: preserve-3d;
+  transition: translate 1s;
+  translate: calc(min(var(--c), 1) * 50%) 0%;
+  rotate: 1 0 0 30deg;
+}
+
+.page {
+  --thickness: 4;
+  flex: none;
+  display: flex;
+  width: 100%;
+  font-size: 2.2cqmin; /* Slightly increased font size */
+  pointer-events: all;
+  user-select: none;
+  transform-style: preserve-3d;
+  transform-origin: left center;
+  transition: transform 1s,
+      rotate 1s ease-in calc((min(var(--i), var(--c)) - max(var(--i), var(--c))) * 50ms);
+  translate: calc(var(--i) * -100%) 0px 0px;
+  transform: translateZ(calc((var(--c) - var(--i) - 0.5) * calc(var(--thickness) * 0.23cqmin)));
+  rotate: 0 1 0 calc(clamp(0, var(--c) - var(--i), 1) * -180deg);
+}
+
+.front,
+.back {
+  position: relative;
+  flex: none;
+  width: 100%;
+  backface-visibility: hidden;
+  overflow: hidden;
+  background-color: #fff;
+  translate: 0px;
+}
+
+.back {
+  translate: -100% 0;
+  rotate: 0 1 0 180deg;
+}
+
+.book {
+  counter-reset: page -1;
+}
+
+.book a {
+  color: inherit;
+}
+
+.page {
+  box-shadow: 0em 0.5em 1em -0.2em #00000020;
+}
+
+.front,
+.back {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: space-between;
+  padding: 2em;
+  border: 1px solid #0002;
+}
+
+.front:has(img),
+.back:has(img) {
+  padding: 0;
+}
+
+.front img,
+.back img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.front::after,
+.back::after {
+  position: absolute;
+  bottom: 1em;
+  counter-increment: page;
+  content: counter(page) ".";
+  font-size: 0.8em;
+}
+
+.cover::after {
+  content: "";
+}
+
+.front::after {
+  right: 1em;
+}
+
+.front {
+  background: linear-gradient(to left, #f7f7f7 80%, #eee 100%);
+  border-radius: 0.1em 0.5em 0.5em 0.1em;
+}
+
+.back::after {
+  left: 1em;
+}
+
+.back {
+  background-image: linear-gradient(to right, #f7f7f7 80%, #eee 100%);
+  border-radius: 0.5em 0.1em 0.1em 0.5em;
+}
+
+.cover {
+  background: radial-gradient(
+          circle farthest-corner at 80% 20%,
+          hsl(150 80% 20% / 0.3) 0%,
+          hsl(170 60% 10% / 0.1) 100%
+      ),
+      hsl(231, 32%, 29%) url("./cover.jpeg") 50% / cover;
+  color: hsl(0, 100%, 30%); /* Dark red text color for cover page */
+}
+
+h1,
+h2,
+h3 {
+  margin-bottom: 1px;
+  color: hsl(0, 100%, 30%); /* Dark red heading color */
+}
+
+p {
+  margin-top: 1px;
+  margin-bottom: 8px;
+  line-height: 1.4;
+  color: hsl(0, 100%, 30%); /* Dark red text color for paragraphs */
+}
+
+.front,
+.back {
+  padding: 1.5em;
+  color: hsl(0, 100%, 30%); /* Dark red text color for front and back pages */
+}
+
+.book {
+  width: 40cqmin; /* Slightly increased width */
+}
+
+.page {
+  font-size: 2cqmin; /* Slightly increased font size */
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+.front,
+.back {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 1.5em;
+}
+
+h2 {
+  margin-bottom: 5px;
+}
+
+p {
+  margin-top: 5px;
+  line-height: 1.4;
+}
+
+
+body {
+  margin: 0;
+  display: flex;
+  min-height: 100dvh;
+  perspective: 1000px;
+  font: 1em/1.4 "Poppins", sans-serif;
+  overflow: hidden;
+  color: hsl(180 68% 5%);
+  background: linear-gradient(to right, #ff7eb9, #ff65a3, #ff165d);
+  background-size: 400% 400%;
+  animation: gradientAnimation 10s ease infinite;
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Emoji Animation */
+.emoji {
+  position: absolute;
+  font-size: 3rem;
+  opacity: 0;
+  animation: floatEmojis 6s ease-in-out infinite;
+}
+
+@keyframes floatEmojis {
+  0% {
+    transform: translateY(100px);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-100px) rotate(20deg);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateY(100px);
+    opacity: 1;
+  }
+}
+
+/* Add random timing for each emoji */
+.emoji:nth-child(1) {
+  animation-delay: 0s;
+  left: 10%;
+}
+.emoji:nth-child(2) {
+  animation-delay: 1s;
+  left: 20%;
+}
+.emoji:nth-child(3) {
+  animation-delay: 2s;
+  left: 30%;
+}
+.emoji:nth-child(4) {
+  animation-delay: 3s;
+  left: 40%;
+}
+.emoji:nth-child(5) {
+  animation-delay: 4s;
+  left: 50%;
+}
+.emoji:nth-child(6) {
+  animation-delay: 5s;
+  left: 60%;
+}
+.emoji:nth-child(7) {
+  animation-delay: 6s;
+  left: 70%;
+}
+.emoji:nth-child(8) {
+  animation-delay: 7s;
+  left: 80%;
+}
+.emoji:nth-child(9) {
+  animation-delay: 8s;
+  left: 90%;
+}
+
+
+     </style>
+  </head>
+  <body>
+    <div class="book">
+      <div class="page">
+        <div class="front cover">
+          <h1
+            style="
+              color: rgb(255, 255, 255);
+              text-shadow: 5px 2px 5px rgb(0, 0, 0);
+            "
+          >
+            A Message for You🤍
+          </h1>
+
+          <p
+            style="
+              color: rgb(255, 255, 255);
+              text-shadow: 5px 2px 5px rgb(0, 0, 0);
+            "
+          >
+            .<br /> 
+          </p>
+        </div>
+        <div class="back">
+          <h2>The Moment You Stole My Heart❤️✨</h2>
+
+       <p> I still remember the first time I saw you I literally froze. I know it sounds super filmy, like how can someone go crazy over just one glance? It might seem fake to others, but trust me, it's the absolute truth. </p>
+<p>
+The moment I saw you, I knew Affan Malik if you don’t try, you'll spend your whole life regretting it. I'm genuinely obsessed with you. I love talking about your interests, your thoughts everything about you. Ever since I saw you, I can't focus on anything, can't get anything done properly. </p>
+
+<p> Sometimes, I feel like I've turned into a total ‘nibba,’ but honestly? If it's for you, I don’t even mind it.
+ 💖</p>
+
+                  </div>
+      </div>
+      <!--2nd page-->
+      <div class="page">
+        <div class="front">
+          <h2>More Than Just a Feeling❤️</h2>
+          <p>
+            I never thought I’d feel something this strong just by seeing someone. I never believed in love at first sight, but then I saw you, AZEEN, and everything changed. </p>
+<p>
+
+Maybe to you, this seems like nothing, but for me, it’s different. I’ve never been the type to get attracted so quickly, never thought about someone as a partner right away. But with you, it’s like I can’t stop thinking about you. </p>
+<p>
+
+You feel RARE and SPECIAL to me. I don’t want anything in return, I just want to do what I can for you. My pride, ego, and even self-respect don’t matter when it comes to you. </p>
+<p>
+Idk what this feeling is maybe love, maybe something else but whatever it is, it’s real and it’s deep. I won’t call it love at first sight, but I’ll call it something special because that’s what you are to me.
+          </p>
+        </div>
+        <div class="back">
+          <img src="./1.jpeg" alt="Img 1" />
+        </div>
+      </div>
+      <!--3rd page-->
+      <div class="page">
+        <div class="front">
+          <h2>You, A Beautiful Mystery ✨💖</h2>
+          <p>
+           There’s something about you something I can’t explain. I’ve never met you, never heard your voice, yet you feel like a dream I don’t want to wake up from. The way your eyes shine, the way your smile feels like just WOW </p>
+ <p>
+I often wonder how can someone I’ve never met feel so important? </p>
+<p>
+
+But admiration from afar isn’t enough anymore. I’m IMPATIENT I want to hear your voice, to know if it sounds as beautiful as I imagine. Soft and warm? Full of laughter? Whatever it is, I know I’d never get tired of listening. </p>
+<p>
+
+ I hope one day, I won’t just admire you from a distance I’ll finally get to hear the voice I’ve been waiting for.✨💖
+          </p>
+        </div>
+        <div class="back">
+          <h2>Grateful I Noticed You ✨</h2>
+          <p>
+           Can we talk about how amazing you look in every outfit? Honestly, no matter what you wear, you always look stunning. It’s not just your clothes, it’s the way you carry yourself. Whatever you wear, you always look stunning. </p>
+
+<p>
+
+I just wanted to let you know how much I appreciate you and how much I admire everything about you. </p> <p> I’m really thankful for the chance to have crossed paths with you, even if it’s only been for a short time. You’ve made an impact and I’m grateful for that.</p>
+          </p>
+        </div>
+      </div>
+      <!--4th page-->
+      <div class="page">
+        <div class="front">
+          <h2>The Best Part of My Day🤞💖</h2>
+          <p>
+            Talking to you has quickly become one of the best parts of my day. Every time I see your message, I smile without even trying. No matter how my day is going, talking to you makes everything feel calmer. </p>
+<p>
+
+
+
+And I can’t explain it properly, but these last 2.5 months of talking to you… they felt different. Iknw maybe it wasn’t right, and maybe I shouldn’t have let myself get used to it… but still this phase meant a lot to me. </p> <p> It was something really beautiful for me.</p>
+<p>
+
+
+
+I never thought simple conversations could mean this much… but with you, they do.
+          </p>
+        </div>
+        <div class="back">
+          <img src="./2.jpeg" alt="Img 1" />
+        </div>
+      </div>
+      <!--5th page-->
+      <div class="page">
+        <div class="front">
+          <h1>A Wish from the Heart</h1>
+          <p>
+            I don’t know what the future holds, but I can honestly say that I’m enjoying this moment so much, and it’s all thanks to you. </p>
+<p> If you hadn’t come into my life, I don’t think I would’ve felt this way. It’s hard to explain, but you make everything feel so special. </p>
+<p>
+
+And btw, I’m pretty sure you won’t find anyone better than me, handsome, cute, well-mannered, educated, and all that good stuff. (Haha JK!) </p>
+<p> But I don’t even know what kind of guy you like, I’d be happy to become whatever you want me to be. If you don’t like my background, I’ll change that. If you think my face could be better, I’ll do whatever it takes. </p>
+<p> Honestly, I just want to be the person you like, because all I really hope for in the end is that we meet someday.
+          </p>
+        </div>
+        <div class="back">
+          <h1>35 Reasons Why I Choose You✨</h1>
+          <p>
+             <p>1. Your bond with your parents and the respect you have for them.</p>
+<p>2. The way you prioritize your studies.</p>
+<p>3. You’re not easy to read and honestly, I like trying to understand you </p>
+<p>4. Your height. OMG</p>
+<p>5. Your curly hair that suits you perfectly.</p>
+<p>6. The way you always shut me up. I love that Azeen</p>
+<p>7. The way you rejected me directly… it hurt, but I love that</p>
+          </p>
+        </div>
+      </div>
+      <!--6th page-->
+      <div class="page">
+        <div class="front">
+         
+          <p>
+<p>8. Your unique way of thinking about life.</p>
+<p>9. You are so so so so so RARE. I can't. </p>
+<p>10. You make me feel alive and this is so true. </p>
+<p>11. Your honesty.</p>
+<p>12. You inspire me to be a better person.</p>
+<p>13. I feel comfortable talking to you.</p>
+<p>14. Your intelligence.</p>
+<p>15. You make the most ordinary moments feel special.</p>
+<p>16. The way you stay selective… </p>
+<p>17. You have the most beautiful moti moti EYES istg. Mashallah </p>
+                     </p>
+        </div>
+        <div class="back">
+          <h2></h2>
+          <p>
+           <p> 18. You’re the reason for my blushing sometimes.</p>
+<p>19. The way you keep your feelings guarded… </p>
+<p>20. Your smile something I can never get enough of.</p>
+<p>21. You’re not easily impressed, and I really respect that. </p>
+<p>22. You don’t give everything at once… and that mystery is beautiful.</p>
+<p>23. The way you stay calm and unbothered… </p>
+<p>24. The way you don’t give attention easily… it makes your attention more valuable.</p>
+<p>25. You’re not afraid to be yourself and that’s so attractive Azeen.</p>
+<p>26. You don’t open up easily. </p>
+
+
+          </p>
+        </div>
+      </div>
+      <!--7th page-->
+      <div class="page">
+        <div class="front">
+          <h2></h2>
+          <p>
+<p>27. The way you stand up for what you believe in.</p>
+<p>28. Your sense of humor.</p>
+
+          <p>29. You’ve got this calm energy that makes everything seem okay.</p>
+<p>30. The way you make me wait for your reply… and still I do happily.</p>     
+<p>31. Your little “attitude”… I won’t lie I like that too.</p>
+<p>32. The way you stay a little distant… it makes me want to understand you more. </p>
+<p>33. You’re always challenging me to be my best self.</p>
+<p>34. You don’t open up easilyThe way you don’t explain yourself to everyone </p>
+<p>35. *you’re you*, and that’s why I choose YOU</p>
+    </p>
+        </div>
+        <div class="back">
+          <h1> Will You? </h1>
+          <p>
+            
+            I don’t know what the future holds, but I do know one thing I’d love to have you by my side. </p> <p>  I'm 100% sure you'll say NO, but here’s my question, </p>
+<p> 
+
+            
+            Will you be my Valentine forever? Not just for a day, but for a lifetime? 💖 </p>
+<p> WILL YOU? </p>
+        </div>
+      </div>
+
+      <div class="page">
+        <div class="front">
+          <img src="./4.jpeg" alt="Img 1" />
+        </div>
+        <div class="back cover">
+          <h3></h3>
+          <p>
+            <br /><a
+              href=""
+              target="_blank"
+              rel="nofollow"></a>
+
+            <br />
+          </p>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="emoji">❤️‍🔥</div>
+<div class="emoji">🫶🏻</div>
+<div class="emoji">❤️</div>
+<div class="emoji">👨‍❤️‍💋‍👨</div>
+<div class="emoji">💓</div>
+<div class="emoji">❣️</div>
+<div class="emoji">💘</div>
+<div class="emoji">💖</div>
+<div class="emoji">💙</div>
+<div class="emoji">💚</div>
+<div class="emoji">🥰</div>
+<div class="emoji">💗</div>
+
+<script>
+  const flipBook = (elBook) => {
+    elBook.style.setProperty("--c", 0); // Set current page
+    elBook.querySelectorAll(".page").forEach((page, idx) => {
+      page.style.setProperty("--i", idx);
+      page.addEventListener("click", (evt) => {
+        if (evt.target.closest("a")) return;
+        const curr = evt.target.closest(".back") ? idx : idx + 1;
+        elBook.style.setProperty("--c", curr);
+      });
+    });
+  };
+  
+  document.querySelectorAll(".book").forEach(flipBook);
+  
+</script>
+ 
+  </body>
+</html>

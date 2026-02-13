@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Loading… 💌 by Shobhit</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --rose:  #ff2d6e;
+      --blush: #ff7eb3;
+      --deep:  #1a0010;
+      --glass: rgba(255,255,255,0.12);
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #1a0010;
+      font-family: 'DM Sans', sans-serif;
+      overflow: hidden;
+      cursor: none;
+    }
+
+    /* ── BG ── */
+    .bg {
+      position: fixed; inset: 0;
+      background:
+        radial-gradient(ellipse at 15% 25%, #6b0f3a 0%, transparent 50%),
+        radial-gradient(ellipse at 85% 75%, #3d001f 0%, transparent 55%),
+        radial-gradient(ellipse at 50% 50%, #4a0028 0%, #1a0010 75%);
+      z-index: 0;
+    }
+
+    /* ── CURSOR ── */
+    .cursor {
+      position: fixed; width: 20px; height: 20px;
+      background: var(--rose); border-radius: 50%;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%,-50%);
+      mix-blend-mode: screen;
+      box-shadow: 0 0 16px 5px rgba(255,45,110,0.55);
+      transition: width .2s, height .2s;
+    }
+    .cursor.big { width: 38px; height: 38px; }
+
+    /* ── PARTICLES ── */
+    #petals { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
+
+    /* ── CARD ── */
+    .card {
+      position: relative; z-index: 10;
+      width: min(440px, 92vw);
+      background: var(--glass);
+      border: 1px solid rgba(255,255,255,0.18);
+      border-radius: 32px;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      box-shadow: 0 8px 52px rgba(180,0,70,0.3), inset 0 1px 0 rgba(255,255,255,0.22);
+      padding: 52px 44px 48px;
+      text-align: center;
+      animation: cardIn 0.9s cubic-bezier(.16,1,.3,1) both;
+    }
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(36px) scale(0.94); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* ── 3‑D HEART ── */
+    .heart-wrap {
+      margin: 0 auto 24px;
+      width: 100px; height: 100px;
+      animation: heartbeat 1.5s ease-in-out infinite;
+      filter: drop-shadow(0 0 22px rgba(255,45,110,0.65));
+    }
+    .heart-wrap img { width: 100%; height: 100%; object-fit: contain; }
+    @keyframes heartbeat {
+      0%,100% { transform: scale(1);    }
+      14%      { transform: scale(1.22); }
+      28%      { transform: scale(1);    }
+      42%      { transform: scale(1.14); }
+      56%      { transform: scale(1);    }
+    }
+
+    /* ── TEXT ── */
+    .title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.6rem, 5vw, 2.1rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .subtitle {
+      font-size: 0.88rem;
+      color: rgba(255,180,210,0.75);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      margin-bottom: 34px;
+    }
+
+    /* ── PROGRESS ── */
+    .progress-wrap {
+      position: relative;
+      margin-bottom: 10px;
+    }
+    .progress-track {
+      width: 100%;
+      height: 8px;
+      background: rgba(255,255,255,0.12);
+      border-radius: 50px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #ff2d6e, #ff7eb3, #ffb3d4);
+      border-radius: 50px;
+      transition: width 0.1s linear;
+      box-shadow: 0 0 12px rgba(255,45,110,0.6);
+      position: relative;
+    }
+    .progress-fill::after {
+      content: '';
+      position: absolute;
+      right: 0; top: 0; bottom: 0;
+      width: 20px;
+      background: rgba(255,255,255,0.4);
+      filter: blur(4px);
+      border-radius: 50px;
+    }
+    .progress-pct {
+      margin-top: 10px;
+      font-size: 0.78rem;
+      color: rgba(255,180,210,0.7);
+      letter-spacing: 0.1em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* ── STATUS TEXT ── */
+    .status {
+      font-size: 0.92rem;
+      color: rgba(255,200,225,0.85);
+      font-style: italic;
+      min-height: 24px;
+      margin: 18px 0 28px;
+      transition: opacity 0.3s;
+    }
+
+    /* ── BUTTON ── */
+    .btn {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #ff2d6e, #ff7eb3);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: none;
+      position: relative; overflow: hidden;
+      box-shadow: 0 4px 24px rgba(255,45,110,0.45);
+      transition: transform 0.2s, box-shadow 0.2s, opacity 0.4s;
+      opacity: 0; pointer-events: none;
+    }
+    .btn.ready { opacity: 1; pointer-events: all; animation: btnPop 0.5s cubic-bezier(.16,1,.3,1) both; }
+    @keyframes btnPop {
+      from { transform: scale(0.88); }
+      to   { transform: scale(1); }
+    }
+    .btn:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(255,45,110,0.6); }
+    .btn:active { transform: translateY(0); }
+    .btn::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(rgba(255,255,255,0.15), transparent);
+      border-radius: inherit;
+    }
+
+    /* ── RIPPLE ── */
+    .ripple {
+      position: absolute; border-radius: 50%;
+      transform: scale(0);
+      background: rgba(255,255,255,0.28);
+      animation: rippleAnim 0.6s linear;
+      pointer-events: none;
+    }
+    @keyframes rippleAnim { to { transform: scale(4); opacity: 0; } }
+
+    /* ── FLOAT HEARTS ── */
+    .float-heart {
+      position: fixed; pointer-events: none; z-index: 5;
+      animation: floatUp linear forwards; font-size: 1.3em;
+    }
+    @keyframes floatUp {
+      0%   { opacity: 1; transform: translateY(0) scale(1); }
+      100% { opacity: 0; transform: translateY(-110px) scale(0.3); }
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      margin-top: 28px;
+      font-size: 0.72rem;
+      color: rgba(255,150,190,0.35);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="bg"></div>
+  <canvas id="petals"></canvas>
+
+  <div class="card">
+    <div class="heart-wrap">
+      <img src="https://static.vecteezy.com/system/resources/thumbnails/017/419/333/small/3d-illustration-of-a-shiny-heart-symbol-of-love-and-romance-png.png" alt="Heart"/>
+    </div>
+
+    <h1 class="title">Preparing Something<br/><em>Special for Azeen…</em></h1>
+    <p class="subtitle">Get ready My Sunflower 💖</p>
+
+    <div class="progress-wrap">
+      <div class="progress-track">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+      <div class="progress-pct" id="progress-pct">0%</div>
+    </div>
+
+    <div class="status" id="status">Gathering rose petals… 🌹</div>
+
+    <button class="btn" id="next-btn" onclick="window.location.href='book.html'">
+      Khul Ja Sim Sim &nbsp;→
+    </button>
+
+    <div class="footer">made with love by AFFAN </div>
+  </div>
+
+  <script>
+    /* ── Cursor ── */
+    const cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top  = e.clientY + 'px';
+    });
+    document.querySelectorAll('button').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('big'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('big'));
+    });
+
+    /* ── Click hearts ── */
+    document.addEventListener('click', e => {
+      ['💖','💗','💕','✨','🌹'].forEach((sym, i) => {
+        const h = document.createElement('div');
+        h.className = 'float-heart';
+        h.textContent = sym;
+        h.style.left = (e.clientX + (Math.random()-0.5)*50) + 'px';
+        h.style.top  = (e.clientY + (Math.random()-0.5)*50) + 'px';
+        h.style.animationDuration = (0.7 + Math.random()*0.5) + 's';
+        h.style.animationDelay = (i * 0.06) + 's';
+        document.body.appendChild(h);
+        h.addEventListener('animationend', () => h.remove());
+      });
+    });
+
+    /* ── Particle canvas ── */
+    (function(){
+      const cvs = document.getElementById('petals');
+      const ctx = cvs.getContext('2d');
+      let W, H;
+      function resize(){ W = cvs.width = innerWidth; H = cvs.height = innerHeight; }
+      window.addEventListener('resize', resize); resize();
+      const syms = ['❤','💕','✦','·','♡','✿','*'];
+      const pts  = Array.from({length:60}, () => ({
+        x: Math.random()*1000, y: Math.random()*800,
+        size: 7+Math.random()*14, speed: .4+Math.random()*1.1,
+        drift: (Math.random()-.5)*.7, alpha: .2+Math.random()*.55,
+        sym: syms[Math.floor(Math.random()*syms.length)],
+        rot: Math.random()*Math.PI*2, spin: (Math.random()-.5)*.03
+      }));
+      (function draw(){
+        ctx.clearRect(0,0,W,H);
+        pts.forEach(p => {
+          ctx.save();
+          ctx.globalAlpha = p.alpha;
+          ctx.font = p.size+'px serif';
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.rot);
+          ctx.fillStyle = '#ff6ea8';
+          ctx.fillText(p.sym, 0, 0);
+          ctx.restore();
+          p.y += p.speed; p.x += p.drift; p.rot += p.spin;
+          if(p.y > H+20){ p.y=-20; p.x=Math.random()*W; }
+        });
+        requestAnimationFrame(draw);
+      })();
+    })();
+
+    /* ── Progress loader ── */
+    const fill    = document.getElementById('progress-fill');
+    const pct     = document.getElementById('progress-pct');
+    const status  = document.getElementById('status');
+    const nextBtn = document.getElementById('next-btn');
+
+    const messages = [
+      [0,  'Gathering rose petals… 🌹'],
+      [20, 'Whispering sweet nothings… 💬'],
+      [40, 'Folding love letters… 💌'],
+      [60, 'Sprinkling magic dust… ✨'],
+      [80, 'Almost ready for you… 💖'],
+      [95, 'Opening our little world… 🌸'],
+    ];
+
+    let current = 0;
+    const interval = setInterval(() => {
+      current = Math.min(current + (Math.random() * 2.2 + 0.5), 100);
+      fill.style.width = current + '%';
+      pct.textContent  = Math.floor(current) + '%';
+
+      messages.forEach(([threshold, msg]) => {
+        if (current >= threshold && status.textContent !== msg &&
+            current < threshold + 22) {
+          status.style.opacity = 0;
+          setTimeout(() => { status.textContent = msg; status.style.opacity = 1; }, 200);
+        }
+      });
+
+      if (current >= 100) {
+        clearInterval(interval);
+        fill.style.width = '100%';
+        pct.textContent  = '100%';
+        status.style.opacity = 0;
+        setTimeout(() => {
+          status.textContent = 'Ready!💖';
+          status.style.opacity = 1;
+          nextBtn.classList.add('ready');
+        }, 300);
+      }
+    }, 60);
+
+    /* ── Ripple ── */
+    nextBtn.addEventListener('click', function(e) {
+      const r = document.createElement('span');
+      r.className = 'ripple';
+      const rect = this.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      r.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX-rect.left-size/2}px;top:${e.clientY-rect.top-size/2}px`;
+      this.appendChild(r);
+      setTimeout(() => r.remove(), 650);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Love Login 💌 by AZEEN</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --rose:    #ff2d6e;
+      --blush:   #ff7eb3;
+      --cream:   #fff0f5;
+      --glass:   rgba(255,255,255,0.18);
+      --shadow:  rgba(180,0,70,0.25);
+    }
+
+    /* ── CANVAS ── */
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      font-family: 'DM Sans', sans-serif;
+      background: #1a0010;
+      cursor: none;
+    }
+
+    /* ── ANIMATED GRADIENT BG ── */
+    .bg-layer {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(ellipse at 20% 30%, #7b1040 0%, transparent 55%),
+                  radial-gradient(ellipse at 80% 70%, #3d001f 0%, transparent 55%),
+                  radial-gradient(ellipse at 50% 50%, #5c0030 0%, #1a0010 80%);
+      z-index: 0;
+    }
+
+    /* ── CUSTOM CURSOR ── */
+    .cursor {
+      position: fixed;
+      width: 22px; height: 22px;
+      background: var(--rose);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      mix-blend-mode: screen;
+      transition: transform 0.1s ease, width 0.2s, height 0.2s;
+      box-shadow: 0 0 18px 6px rgba(255,45,110,0.5);
+    }
+    .cursor.big { width: 40px; height: 40px; }
+
+    /* ── PARTICLES CANVAS ── */
+    #petals { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
+
+    /* ── CARD ── */
+    .card {
+      position: relative;
+      z-index: 10;
+      width: min(420px, 92vw);
+      background: var(--glass);
+      border: 1px solid rgba(255,255,255,0.22);
+      border-radius: 28px;
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      box-shadow: 0 8px 48px var(--shadow), inset 0 1px 0 rgba(255,255,255,0.25);
+      padding: 48px 44px 44px;
+      text-align: center;
+      animation: cardIn 0.9s cubic-bezier(.16,1,.3,1) both;
+    }
+
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(40px) scale(0.95); }
+      to   { opacity: 1; transform: translateY(0)   scale(1);    }
+    }
+
+    /* ── TOP ICON ── */
+    .heart-icon {
+      font-size: 52px;
+      display: block;
+      margin: 0 auto 6px;
+      animation: heartbeat 1.4s ease-in-out infinite;
+      filter: drop-shadow(0 0 14px rgba(255,45,110,0.7));
+    }
+    @keyframes heartbeat {
+      0%,100% { transform: scale(1); }
+      14%      { transform: scale(1.18); }
+      28%      { transform: scale(1); }
+      42%      { transform: scale(1.12); }
+      56%      { transform: scale(1); }
+    }
+
+    /* ── HEADLINE ── */
+    .headline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 5vw, 2rem);
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      margin-bottom: 4px;
+    }
+    .subline {
+      font-size: 0.82rem;
+      color: rgba(255,200,220,0.7);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 36px;
+    }
+
+    /* ── INPUT ── */
+    .field-wrap {
+      position: relative;
+      margin-bottom: 18px;
+    }
+    .field-wrap input {
+      width: 100%;
+      padding: 16px 20px 16px 48px;
+      border: 1.5px solid rgba(255,255,255,0.2);
+      border-radius: 14px;
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      font-weight: 400;
+      letter-spacing: 0.03em;
+      outline: none;
+      transition: border-color 0.3s, background 0.3s, box-shadow 0.3s;
+    }
+    .field-wrap input::placeholder { color: rgba(255,200,220,0.5); }
+    .field-wrap input:focus {
+      border-color: var(--blush);
+      background: rgba(255,255,255,0.15);
+      box-shadow: 0 0 0 4px rgba(255,126,179,0.2);
+    }
+    .field-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 18px;
+      pointer-events: none;
+    }
+
+    /* ── BUTTON ── */
+    .btn {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 14px;
+      background: linear-gradient(135deg, #ff2d6e, #ff7eb3);
+      color: #fff;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1.05rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      cursor: none;
+      margin-top: 8px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 22px rgba(255,45,110,0.45);
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(255,45,110,0.6);
+    }
+    .btn:active { transform: translateY(0); }
+    .btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(rgba(255,255,255,0.12), transparent);
+      border-radius: inherit;
+    }
+
+    /* ── MESSAGE ── */
+    #result {
+      margin-top: 20px;
+      font-size: 0.95rem;
+      min-height: 28px;
+      transition: opacity 0.4s;
+      color: rgba(255,200,220,0.9);
+      font-style: italic;
+    }
+    #result.error { color: #ffb3c6; animation: shake 0.4s ease; }
+    #result.success { color: #a8ffcb; font-weight: 500; }
+
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      20%      { transform: translateX(-6px); }
+      40%      { transform: translateX(6px); }
+      60%      { transform: translateX(-4px); }
+      80%      { transform: translateX(4px); }
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 22px 0 0;
+      color: rgba(255,200,220,0.35);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,0.12);
+    }
+
+    /* ── FLOATING HEARTS ── */
+    .float-heart {
+      position: fixed;
+      pointer-events: none;
+      z-index: 2;
+      animation: floatUp linear forwards;
+      font-size: 1.4em;
+    }
+    @keyframes floatUp {
+      0%   { opacity: 1; transform: translateY(0) rotate(0deg) scale(1); }
+      100% { opacity: 0; transform: translateY(-120px) rotate(20deg) scale(0.4); }
+    }
+
+    /* ── RIPPLE ── */
+    .ripple {
+      position: absolute;
+      border-radius: 50%;
+      transform: scale(0);
+      background: rgba(255,255,255,0.3);
+      animation: rippleAnim 0.6s linear;
+      pointer-events: none;
+    }
+    @keyframes rippleAnim {
+      to { transform: scale(4); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Custom cursor -->
+  <div class="cursor" id="cursor"></div>
+
+  <!-- Background -->
+  <div class="bg-layer"></div>
+
+  <!-- Particle canvas -->
+  <canvas id="petals"></canvas>
+
+  <!-- Card -->
+  <div class="card">
+    <span class="heart-icon">💖</span>
+    <h1 class="headline">Happy Valentine's Day</h1>
+    <p class="subline">A small token for you 💌</p>
+
+    <form id="login-form" autocomplete="off">
+      <div class="field-wrap">
+        <span class="field-icon">🌹</span>
+        <input type="text" id="code" placeholder="Enter your name, my love…" spellcheck="false"/>
+      </div>
+      <button class="btn" type="submit" id="submit-btn">Unlock My Love ✨</button>
+    </form>
+
+    <div id="result"></div>
+    <div class="divider">made with love by AFFAN</div>
+  </div>
+
+  <script>
+    /* ─── Cursor ─── */
+    const cursor = document.getElementById('cursor');
+    document.addEventListener('mousemove', e => {
+      cursor.style.left = e.clientX + 'px';
+      cursor.style.top  = e.clientY  + 'px';
+    });
+    document.querySelectorAll('button, input').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('big'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('big'));
+    });
+
+    /* ─── Floating hearts on click ─── */
+    document.addEventListener('click', e => {
+      for (let i = 0; i < 5; i++) {
+        const h = document.createElement('div');
+        h.className = 'float-heart';
+        h.textContent = ['💖','💗','💕','💝','✨'][Math.floor(Math.random()*5)];
+        h.style.left = (e.clientX + (Math.random()-0.5)*40) + 'px';
+        h.style.top  = (e.clientY + (Math.random()-0.5)*40) + 'px';
+        h.style.animationDuration = (0.8 + Math.random()*0.6) + 's';
+        document.body.appendChild(h);
+        h.addEventListener('animationend', () => h.remove());
+      }
+    });
+
+    /* ─── Particle petals canvas ─── */
+    (function(){
+      const cvs = document.getElementById('petals');
+      const ctx = cvs.getContext('2d');
+      let W, H, particles = [];
+
+      function resize() {
+        W = cvs.width  = window.innerWidth;
+        H = cvs.height = window.innerHeight;
+      }
+      window.addEventListener('resize', resize);
+      resize();
+
+      const symbols = ['❤','💕','✦','·','✿','♡'];
+
+      function Particle() {
+        this.reset = function() {
+          this.x    = Math.random() * W;
+          this.y    = -20;
+          this.size = 8 + Math.random() * 14;
+          this.speed= 0.5 + Math.random() * 1.2;
+          this.drift= (Math.random() - 0.5) * 0.8;
+          this.alpha= 0.3 + Math.random() * 0.6;
+          this.sym  = symbols[Math.floor(Math.random() * symbols.length)];
+          this.rot  = Math.random() * Math.PI * 2;
+          this.spin = (Math.random() - 0.5) * 0.04;
+        };
+        this.reset();
+        this.y = Math.random() * H; // start scattered
+      }
+
+      for (let i = 0; i < 55; i++) particles.push(new Particle());
+
+      function draw() {
+        ctx.clearRect(0, 0, W, H);
+        particles.forEach(p => {
+          ctx.save();
+          ctx.globalAlpha = p.alpha;
+          ctx.font = p.size + 'px serif';
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.rot);
+          ctx.fillStyle = '#ff6ea8';
+          ctx.fillText(p.sym, 0, 0);
+          ctx.restore();
+
+          p.y   += p.speed;
+          p.x   += p.drift;
+          p.rot += p.spin;
+
+          if (p.y > H + 30) p.reset();
+        });
+        requestAnimationFrame(draw);
+      }
+      draw();
+    })();
+
+    /* ─── Ripple on button ─── */
+    document.getElementById('submit-btn').addEventListener('click', function(e) {
+      const r = document.createElement('span');
+      r.className = 'ripple';
+      const rect = this.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      r.style.cssText = `width:${size}px;height:${size}px;left:${e.clientX-rect.left-size/2}px;top:${e.clientY-rect.top-size/2}px`;
+      this.appendChild(r);
+      setTimeout(() => r.remove(), 650);
+    });
+
+    /* ─── Form logic ─── */
+    const form      = document.getElementById('login-form');
+    const codeInput = document.getElementById('code');
+    const resultDiv = document.getElementById('result');
+    const secretCode = 'AZEEN';
+    const nextPageUrl= 'main.html';
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const val = codeInput.value.trim();
+
+      if (val.toLowerCase() === secretCode.toLowerCase()) {
+        resultDiv.className = 'success';
+        resultDiv.innerHTML = '💖 Welcome, My Love… ';
+        document.querySelector('.heart-icon').style.animationDuration = '0.5s';
+        setTimeout(() => { window.location.href = nextPageUrl; }, 1400);
+      } else if (!val) {
+        resultDiv.className = 'error';
+        resultDiv.innerHTML = '🌹 Please enter your name first…';
+      } else {
+        resultDiv.className = 'error';
+        resultDiv.innerHTML = 'Hmm, that doesn\'t sound like my love 🤔 Kon ho tum?';
+        codeInput.value = '';
+        codeInput.focus();
+      }
+    });
+
+    codeInput.addEventListener('input', () => {
+      resultDiv.className = '';
+      resultDiv.innerHTML = '';
+    });
+  </script>
+</body>
+</html>
